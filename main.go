@@ -19,8 +19,8 @@ func main() {
 	http.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		payload, err := hook.Parse(r, github.RepositoryEvent, github.CreateEvent)
 
-		j, _ := json.MarshalIndent(payload, "", "\t")
-		fmt.Println(string(j))
+		// j, _ := json.MarshalIndent(payload, "", "\t")
+		// fmt.Println(string(j))
 
 		if err != nil {
 			fmt.Printf("%+v", err)
@@ -32,8 +32,10 @@ func main() {
 
 		switch payload.(type) {
 		case github.CreatePayload:
-			eventSubType := payload.(github.CreatePayload)
-			fmt.Printf("%+v", eventSubType)
+			createPayload := payload.(github.CreatePayload)
+			j, _ := json.MarshalIndent(createPayload, "", "\t")
+
+			fmt.Println(j)
 		}
 	})
 
