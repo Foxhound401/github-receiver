@@ -17,7 +17,7 @@ func main() {
 	hook, _ := github.New(github.Options.Secret("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"))
 
 	http.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
-		payload, err := hook.Parse(r, github.RepositoryEvent)
+		payload, err := hook.Parse(r, github.RepositoryEvent, github.CreateEvent)
 
 		j, _ := json.MarshalIndent(payload, "", "\t")
 		fmt.Println(string(j))
@@ -31,8 +31,8 @@ func main() {
 		}
 
 		switch payload.(type) {
-		case github.EventSubtype:
-			eventSubType := payload.(github.EventSubtype)
+		case github.CreatePayload:
+			eventSubType := payload.(github.CreatePayload)
 			fmt.Printf("%+v", eventSubType)
 		}
 	})
