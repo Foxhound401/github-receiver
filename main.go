@@ -35,7 +35,13 @@ func main() {
 			createPayload := payload.(github.CreatePayload)
 			j, _ := json.MarshalIndent(createPayload, "", "\t")
 
-			fmt.Println(j)
+			fmt.Println(string(j))
+
+		case github.RepositoryPayload:
+			repositoryPayload := payload.(github.RepositoryPayload)
+			j, _ := json.MarshalIndent(repositoryPayload, "", "\t")
+
+			fmt.Println(string(j))
 		}
 	})
 
